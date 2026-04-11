@@ -5,6 +5,7 @@ define n = Character("Narrator")
 define a = Character("You")
 define b = Character("Billey")
 default BilleyAlive = True
+default BilleyRun = False
 default obedianceScore = 96.0
 default misfit = False
 screen obediance():
@@ -53,8 +54,17 @@ label start:
                             $ obedianceScore += 5
                             $ BilleyAlive = False
                             jump home
-                        "No":
+                        "No.":
                             a "Billey! Talk to me!"
+                            n "Billey started running away."
+                            $ BilleyRun = True
+                            menu:
+                                "Chase?"
+                                "Yes.":
+                                    "You run and run after him, but you lose track and end up returning home."
+                                "No.":
+                                    "You decide to head home."
+                            jump home
                 "Keep walking. {w=0.2}Any delay from your route will affect you obediance score.":
                     jump home
                 "Walk towards him.":
@@ -68,7 +78,20 @@ label start:
     jump endScreen
 
 label home:
-    n "You. Are. Home."
+    n "Now you're home,"
+    n "You think over the events of today and can't help but think you missed something... {w=2.0}something important. {w=0.5}Very, {w=0.2}very important..."
+    n "You head to your room, and see your little sister is already in bed."
+    menu:
+        n "Do you tuck your little sister in?"
+        "Yes.":
+            a "*Tucks her in.*"
+        "No.":
+            n "Why? This small deed of good affects the story in no feasible way."
+            n "Now your poor little sister will be freezing all night."
+            n "How. Dare. You."
+            $ obedianceScore -= 20
+            n "But... since I'm the narrator, I can change that myself."
+            n "*You tuck your sister in. {w=1.0}As if some mysterious force is making you. {w=1.0}You deeply regret not doing it yourself in the first place.*"
     jump endScreen
 
 define w = Character("Processing Worker")
