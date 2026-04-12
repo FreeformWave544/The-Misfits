@@ -215,6 +215,9 @@ label home:
                                     b "Ok. The truth? I was looking for a parcel."
                                     a "In a tree? Likely story."
                                     b "Believe me! It's the truth. Just as true as: We need to get to lesson now. Before we're late."
+                                    b "Else your 'all so precious' obedience score will be tarnished!"
+                                    a "Ha. But I bet your obedience score is so much worse than mine."
+                                    b "No clue. I stopped checking it when I got my 15th reduction."
                                     jump lesson1
                         "Leave it be.":
                             pass
@@ -226,6 +229,16 @@ label home:
 
 label lesson1:
     n "At your first lesson..."
+    n "You notice Billey still hasn't shown up."
+    n "But he doesn't matter. Your lesson matters. Your obedience score matters. Focus on that all."
+    b "Sorry, sir, about being late..."
+    menu:
+        b "*Sits down next to you.*"
+        "Why were you so late?":
+            b "None the matter... say, in 3 days, do you want to have a sleepover?"
+            show text "3 Days." with dissolve
+            a "3 days? I—Uh—"
+            hide text "3 Days." with dissolve
 
 define w = Character("Processing Worker")
 label endScreen:

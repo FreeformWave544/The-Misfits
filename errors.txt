@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 155: expected statement.
-    say("?..??", "3 days.")
-                           ^
-
-File "game/script.rpy", line 156: expected statement.
-    say("?..??", "They strike.")
-                                ^
+File "game/script.rpy", line 240: end of line expected.
+    show text "3 Days." dissolve
+                        ^
 
 Ren'Py Version: Ren'Py 8.5.2.26010301
-Sun Apr 12 18:38:26 2026
+Sun Apr 12 19:54:09 2026
