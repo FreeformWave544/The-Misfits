@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 17: 'f535' is not a keyword argument or valid child of the text statement.
-    text "Obedience Score: [obidienceScore]{/color}" color 23f535
-                                                                 ^
+File "game/script.rpy", line 38: end of line expected.
+    if "+" in text: color "#23f535"
+                    ^
 
 Ren'Py Version: Ren'Py 8.5.2.26010301
-Sat Apr 11 19:10:38 2026
+Sun Apr 12 14:14:16 2026

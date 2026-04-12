@@ -1,5 +1,11 @@
 ﻿init python:
     import random
+    def change_obedience(amount):
+        global obedienceScore
+        obedienceScore += amount
+        if amount != 0:
+            sign = "+" if amount > 0 else ""
+            renpy.show_screen("obedience_popup", text=f"{sign}{amount} Obedience")
 
 define n = Character("Narrator")
 define a = Character("You")
@@ -21,6 +27,19 @@ screen obedience():
             text "Obedience Score: [obedienceScore]" color "#f52323"
         else:
             text "Obedience Score: [obedienceScore]" color "#CD1C18"
+
+screen obedience_popup(text):
+    frame:
+        xalign 0.5
+        yalign 0.2
+        background None
+        text text:
+            size 40
+            if "+" in text:
+                color "#23f535"
+            else:
+                color "#f52323"
+    timer 1.0 action Hide("obedience_popup")
 
 label start:
     $ obedienceScore = 96.0
@@ -52,7 +71,7 @@ label presence:
             n "You spin around, losing friction, and you start spinning 'round and 'round,"
             n "So much so that you've already exceeded your weekly spin levels. Any more and you'll get a fee."
             n "In fact, this movement is so, SO incredibly unproductive that I think I'll just give you a redo."
-            $ obedienceScore -= 1
+            $ change_obedience(-1)
             if spins >= 10:
                 n "STOP. {w=1.0}NOW!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!"
             elif spins >= 5:
@@ -63,7 +82,7 @@ label presence:
         "Turn a corner then make a run for it.":
             n "You run and you run, yet you have a strange feeling of being followed."
             n "Until this feeling suddenly disappears and you realise you've been running for hours."
-            n "You've ran to an abandoned place with a big sign. \"KFC\""
+            n "You've run to an abandoned place with a big sign. \"KFC\""
             n "From what you read, it seems to be some 'fast-food' restaurant from back when schools were straying from trusting students to surveillance."
         "Turn around slowly and subtly.":
             n "As you turn around, you see Billey, out of school uniform, backing into an alley..."
@@ -72,14 +91,15 @@ label presence:
                 n "Do you interact with your closest friend - Billey?"
                 "Shout for him.":
                     a "Billey! What are you doing?"
-                    $ obedienceScore -= 2
+                    $ change_obedience(-2)
                     menu:
                         n"Did you misread shout as shoot?"
                         "Yes.":
                             a "Bang goes the gun as the bullet goes flying towards Billey."
                             a "Flop goes the body of Billey as the bullet flies on through."
                             a "Shout to shoot, {w=0.7}word to wound, {w=0.7}life to death."
-                            $ obedienceScore += 5
+                            $ change_obedience(5)
+                            a "An innocent life lost for what?"
                             $ BilleyAlive = False
                             jump home
                         "No.":
@@ -89,7 +109,7 @@ label presence:
                     jump home
                 "Walk towards him.":
                     a "Billey?"
-                    $ obedienceScore -= 10
+                    $ change_obedience(-10)
                     jump BilleyRunning
         "Run.":
             n "You bump into a man who was trying to pry the microphone embedded in their clothes..."
@@ -104,7 +124,7 @@ label BilleyRunning:
     menu:
         "Chase?"
         "Yes.":
-            $ obedienceScore -= 5
+            $ change_obedience(-5)
             "You run and run after him, but you lose track and end up returning home."
         "No.":
             "You decide to head home."
@@ -123,7 +143,7 @@ label home:
             n "Why? This small deed of good affects the story in no feasible way."
             n "Now your poor little sister will be freezing all night."
             n "How. {w=0.5}Dare. {w=0.5}You."
-            $ obedienceScore -= 20
+            $ change_obedience(-20)
             $ TuckedSisterIn = False
             n "But... since I'm the narrator, I can change that myself."
             n "*You tuck your sister in. {w=1.5}As if some mysterious force is making you. {w=1.0}You deeply regret not doing it yourself in the first place.*"
@@ -144,13 +164,16 @@ label endScreen:
             w "Report to the incineration and replacement facility."
             n "Two armed guards march in and one holds a strange device to your throat, and you swiftly lose consciousness."
     elif obedienceScore < 90:
-        w "You're obedience score is far below what we accept."
+        w "Your obedience score is far below what we accept."
         w "Please report for refactoring."
     if misfit and obedienceScore >= 50:
         w "As a Misfit, you disrupted our works with your very existence."
         w "For this..."
         w "Report to the incineration and replacement facility."
         n "Two armed guards march in and one holds a strange device to your throat, and you swiftly lose consciousness."
+    if not misfit and obedienceScore >= 90 and BilleyAlive:
+        n "Your life was meaningless. You did nothing of value."
+        n "I feel sorry for you. Actual pity."
     menu:
         "Restart Evaluation?":
             if misfit:
@@ -161,7 +184,7 @@ label endScreen:
             if TuckedSisterIn == False:
                 w "We're looping back. {w=0.5}Why didn't you tuck your sister in?"
                 w "Is it some kind of personal vendetta (same name as one of my game - go play it on itch.io!) against your own sister?"
-                w "If so, why? She never done anything good nor bad to you! All you see of her is her sleeping in this WHOLE visual novel!"
+                w "If so, why? She never did anything good nor bad to you! All you see of her is her sleeping in this WHOLE visual novel!"
             jump start
         "Exit":
             return
