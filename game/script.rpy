@@ -184,7 +184,48 @@ label home:
         renpy.say("?..??", "They strike.{w=3.0}{nw}")
     n "You gasp awake."
     a "It was only a dream... *sigh* an odd dream at that..."
+    n "As you looked around, you saw your sister wasn't there..."
+    a "How odd..."
+    a "Is she early for school? ... That'd be a first."
+    a "*Chuckles to yourself.*"
+    n "On your way to school, you don't see your sister."
+    n "When you get to school, you hand in your phone and go to your usual spot to meet up with Billey."
+    n "He's not there."
+    menu:
+        "Search more for Billey?":
+            a "Billey?"
+            n "You search for Billey, finding him climbing a tree."
+            a "There you are, Billey."
+            b "Oh, [a.name]! How are you?"
+            n "You notice Billey trying to act casual on the tree."
+            menu:
+                "Good, you?":
+                    b "Yeah... yeah... good... lesson? We need to get to lesson."
+                    jump lesson1
+                "What were you doing on the tree?":
+                    menu:
+                        b "Uhh... nothing?"
+                        "Insist on it.":
+                            b "Okay, okay.. I was following a squirrel."
+                            menu:
+                                n "Believe him?"
+                                "Yes.":
+                                    pass
+                                "No.":
+                                    b "Ok. The truth? I was looking for a parcel."
+                                    a "In a tree? Likely story."
+                                    b "Believe me! It's the truth. Just as true as: We need to get to lesson now. Before we're late."
+                                    jump lesson1
+                        "Leave it be.":
+                            pass
+                    a "Okay. Let's get to lesson then."
+                    jump lesson1
+        "Head to lesson.":
+            jump lesson1
     jump endScreen
+
+label lesson1:
+    n "At your first lesson..."
 
 define w = Character("Processing Worker")
 label endScreen:
