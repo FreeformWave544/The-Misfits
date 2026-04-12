@@ -6,6 +6,23 @@
         if amount != 0:
             sign = "+" if amount > 0 else ""
             renpy.show_screen("obedience_popup", text=f"{sign}{amount} Obedience")
+    def glitch_text(text):
+        if random.random() < 0.3:
+            return text.replace("—", "...—")
+        if random.random() < 0.2:
+            sentence = ""
+            for letter in text:
+                sentence += letter.upper() if random.random() >= 0.5 else letter.lower()
+            return sentence
+        return text
+    def glitch_name():
+        name = ""
+        for i in range(5):
+            if random.randint(1, 2) == 1:
+                name += "."
+            else:
+                name += "?"
+        return name
 
 define n = Character("Narrator")
 define a = Character("You")
@@ -147,6 +164,26 @@ label home:
             $ TuckedSisterIn = False
             n "But... since I'm the narrator, I can change that myself."
             n "*You tuck your sister in. {w=1.5}As if some mysterious force is making you. {w=1.0}You deeply regret not doing it yourself in the first place.*"
+    n "As you fall asleep, you have the same 'off' feeling as before wash over you, fading you into unconsciousness..."
+    n "The same words flow circles around your mind, over and over {w=3.0}and over and over{w=1.0} and over and over and over."
+    python:
+        phrases = ["Misfits—", "2 Nerds—", "3 Freaks—", "3 days—"]
+        for i in range(3):
+            for p in random.sample(phrases, len(phrases)):
+                renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.3}{nw}")
+        for i in range(4):
+            for p in random.sample(phrases, len(phrases)):
+                renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.15}{nw}")
+        for i in range(5):
+            for p in random.sample(phrases, len(phrases)):
+                renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.05}{nw}")
+        for i in range(10):
+            for p in random.sample(phrases, len(phrases)):
+                renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.001}{nw}")
+        renpy.say("?..??", "3 days...{w=2.0}{nw}")
+        renpy.say("?..??", "They strike.{w=3.0}{nw}")
+    n "You gasp awake."
+    a "It was only a dream... *sigh* an odd dream at that..."
     jump endScreen
 
 define w = Character("Processing Worker")
