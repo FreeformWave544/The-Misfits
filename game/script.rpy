@@ -32,6 +32,7 @@ default TuckedSisterIn = ""
 default obedienceScore = 96.0
 default misfit = False
 define HC = False
+define role = ""
 screen obedience():
     frame:
         xalign 0.95
@@ -391,15 +392,17 @@ label misfitMeeting:
     menu:
         b "So, what do you chose?"
         "Geek":
-            pass
+            $ role = "Geek"
         "Neek":
-            pass
+            $ role = "Neek"
         "Nerd":
-            pass
+            $ role = "Nerd"
         "Freak":
-            pass
+            $ role = "Freak"
         "Masked":
-            pass
+            $ role = "Masked"
+    b "So... a [role] called out to you? How intriguing..."
+    b "And here I thought you were a servant of the system. Guess you've proved my doubts to be nothing but that - doubts."
 
 label homeAgain:
     pass
