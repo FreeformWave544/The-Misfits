@@ -1,11 +1,10 @@
 ﻿init python:
     import random
-    def change_obedience(amount):
+    def change_obedience(amount=0):
         global obedienceScore
         obedienceScore += amount
-        if amount != 0:
-            sign = "+" if amount > 0 else ""
-            renpy.show_screen("obedience_popup", text=f"{sign}{amount} Obedience")
+        sign = "+" if amount > 0 else ""
+        renpy.show_screen("obedience_popup", text=f"{sign}{amount} Obedience")
     def glitch_text(text):
         if random.random() < 0.3:
             return text.replace("—", "...—")
@@ -32,6 +31,7 @@ default BilleyRun = False
 default TuckedSisterIn = ""
 default obedienceScore = 96.0
 default misfit = False
+define HC = False
 screen obedience():
     frame:
         xalign 0.95
@@ -60,7 +60,7 @@ screen obedience_popup(text):
 
 label start:
     $ obedienceScore = 96.0
-    $ a = Character(renpy.input("What is your name? ").strip() or "Alex")
+    $ a = Character(renpy.input("What is your name? ", length=20).strip() or "Alex")
     n "*BEEP BEEP*"
     n "{w=0.2}*BEEP BEEP*"
     n "Your 9 AM alarm beeped loudly."
@@ -69,7 +69,8 @@ label start:
     show screen obedience
     a "*Sigh* Another 11 hour school day... {w=1.0}'optimal' knowledge retention they said..."
     a "Ha{w=0.2}.{w=0.2}.{w=0.2}. optimal for collecting data we know."
-    jump presence
+    jump misfitMeeting
+    # jump presence
 
 default spins = 0
 label presence:
@@ -122,7 +123,7 @@ label presence:
                         "No.":
                             a "Billey! Talk to me!"
                             jump BilleyRunning
-                "Keep walking. {w=0.2}Any delay from your route will affect you obedience score.":
+                "Keep walking. {w=0.2}Any delay from your route will affect your obedience score.":
                     jump home
                 "Walk towards him.":
                     a "Billey?"
@@ -206,7 +207,7 @@ label home:
                     menu:
                         b "Uhh... nothing?"
                         "Insist on it.":
-                            b "Okay, okay.. I was following a squirrel."
+                            b "Okay, okay... I was following a squirrel."
                             menu:
                                 n "Believe him?"
                                 "Yes.":
@@ -223,14 +224,15 @@ label home:
                             pass
                     a "Okay. Let's get to lesson then."
                     jump lesson1
-        "Head to lesson.":
+        "Head straight to lesson.":
+            $ change_obedience(2)
             jump lesson1
     jump endScreen
 
 label lesson1:
     n "At your first lesson..."
     n "You notice Billey still hasn't shown up."
-    n "But he doesn't matter. Your lesson matters. Your obedience score matters. Focus on that all."
+    n "But he doesn't matter. Your lesson matters. Your obedience score matters. Focus on that. Nothing more."
     b "Sorry, sir, about being late..."
     menu:
         b "*Sits down next to you.*"
@@ -248,21 +250,23 @@ label lesson1:
     n "The teacher then glares daggers at the pair of you."
     $ renpy.say("Teacher", "You two lovebirds. Not this again. One warning - and this is it.")
     $ renpy.say("Teacher", "You're always being observed after all. Behave the part.")
-    if obedienceScore >= 80:
+    $ change_obedience(-16)
+    if obedienceScore > 80:
         a "Yes sir."
     else:
         menu:
             b "You gonna keep playing by their rules, [a.name] or are ya gonna stand up for yourself?"
             "Rules are rules.":
-                $ obedienceScore += 15
+                $ change_obedience(15)
             "Stand up for myself? Hell yes.":
-                $ obedienceScore -= 20
+                $ change_obedience(-20)
                 b "Say... how interested would you be, theoretically, in..."
                 b "... in standing up against the whole system?"
-                b "Stand against them..."
+                b "Stand against... them?"
                 b "Theoretically, of course!"
                 menu:
                     "I mean... sure. I guess.":
+                        $ change_obedience(-10)
                         b "If you're certain then meet me in the janitor's closet after school."
                 n "(After school.)"
                 menu:
@@ -271,6 +275,7 @@ label lesson1:
                         n "Upon entering the closet, you see Billey, standing there ominously in the dark."
                         jump recruitment
                     "No.":
+                        $ change_obedience(2)
                         jump homeAgain
 
 label recruitment:
@@ -288,10 +293,11 @@ label recruitment:
         "No.":
             b "Ok. So the Misfits are, allegedly, an elite taskforce that has infiltrated the roots of society,"
             b "planting people - \"Masked\" - amongst us as teacher, janitors, students, and any role."
-            b "The carry out protests, riots, data breaches of the government, some of the biggest ever DDos attacks against surveillance systems,"
+            b "They carry out protests, riots, data breaches of the government, some of the biggest ever DDoS attacks against surveillance systems,"
             b "all to try and rid us of all the surveillance that has plagued our world."
             a "Okay..."
     a "And... why do I need to know of the Misfits?"
+    b "*Presses a strange device to your neck.*"
     b "Because I am one of them."
     a "You... what?!"
     b "I am a Misfit. I've been one for up on a year now. "
@@ -299,6 +305,7 @@ label recruitment:
     b "Exactly."
     menu:
         "Deal.":
+            $ change_obedience()
             b "Great. Then follow me."
             jump misfitMeeting
         "No.":
@@ -316,18 +323,63 @@ label recruitment:
             $ renpy.say("Teacher", "(Rushes over.) Misfit member? This is serious. You sure?")
             a "Yes. Billey is a Misfit."
             $ renpy.say("Teacher", "(Muttering...) Always knew it... (Turns to [a.name].) Good work. *Takes Billey away.*")
-            n "Day after day, you don't see Billey. They teachers say he had a 'permanent move to a more optimal area for him to learn'."
+            $ change_obedience(20)
+            n "Day after day, you don't see Billey. The teachers say he had a 'permanent move to a more optimal area for him to learn'."
             n "They killed him. You're certain."
             n "In your distraught of losing your first and closest friend, you are unable to live with your guilt."
             jump endScreen
 
 label misfitMeeting:
-    pass
-    # DO THIS NEXT!
+    $ misfit = True
+    n "Billey leads you some distance, blindfolded, and takes it off after you hear the sound of a door closing behind you."
+    b "[a.name]... this is where we hold our meetings."
+    n "It is a small room, rusted table, tiny stools to sit on, meant for young kids,"
+    a "This... is surprisingly pathetic for all I've heard of the Misfits."
+    b "This is just our Merton base."
+    b "Back where we started... it's a lot more put together."
+    $ say("Misfit Nerd", "It's not meant to be flashy and impressive. {w=1.0}\nIt's meant to be hidden.")
+    menu:
+        n "Taken aback by their (slightly rude) abruptness, how do you respond?"
+        "Oh. Sorry...":
+            pass
+        "Never asked it to be polished." if obedienceScore <= 50:
+            a "Never asked it to be polished. Merely asked for seats that aren't microscopic stools."
+            $ change_obedience(-2)
+            b "[a.name], calm down! We're all Misfits here."
+    n "A seemingly important Misfit at the head of the table speaks up."
+    $ say("Important Misfit", "Enough bickering.")
+    $ say("Important Misfit", "We need to plan our next course of action. Is newbie with us or not?")
+    menu:
+        "Yes.":
+            pass
+        "100%%":
+            pass
+        "Sure!":
+            pass
+        "Damn right.":
+            n "Language, kiddo."
+        "Bring it on.":
+            $ say("Important Misfit", "Now that's the energy!")
+        "Yas queen.":
+            pass
+        "Yessir.":
+            pass
+        "Say less.":
+            pass
+    b "*Squeals slightly in joy.* Perfect!"
+    b "Well..."
+    b "Well... welcome to the club!"
+    b "Say, do you like computers?"
+    menu:
+        "Yes.":
+            b "Perfect! Then you can be in our hacker sector. For short, we call it Hack Club."
+            $ HC = True
+        "No.":
+            b "Ah... oh well."
 
 label homeAgain:
     pass
-    # OR DO THIS!!
+    # REMEMBER THIS!!
 
 define w = Character("Processing Worker")
 label endScreen:
