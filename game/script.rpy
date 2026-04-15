@@ -31,8 +31,8 @@ default BilleyRun = False
 default TuckedSisterIn = ""
 default obedienceScore = 96.0
 default misfit = False
-define HC = False
-define role = ""
+default HC = False
+default role = ""
 screen obedience():
     frame:
         xalign 0.95
@@ -60,6 +60,12 @@ screen obedience_popup(text):
     timer 1.0 action Hide("obedience_popup")
 
 label start:
+    $ HC = False
+    $ role = ""
+    $ misfit = False
+    $ BilleyAlive = True
+    $ BilleyRun = False
+    $ TuckedSisterIn = ""
     $ obedienceScore = 96.0
     $ a = Character(renpy.input("What is your name? ", length=20).strip() or "Alex")
     n "*BEEP BEEP*"
@@ -70,8 +76,7 @@ label start:
     show screen obedience
     a "*Sigh* Another 11 hour school day... {w=1.0}'optimal' knowledge retention they said..."
     a "Ha{w=0.2}.{w=0.2}.{w=0.2}. optimal for collecting data we know."
-    jump misfitMeeting
-    # jump presence
+    jump presence
 
 default spins = 0
 label presence:
@@ -84,6 +89,7 @@ label presence:
                 jump endScreen
             elif spins >= 15:
                 n "You know what? Once more and we're shutting this all down."
+                jump presence
             elif spins >= 12:
                 n "Nope. No more. We're done here."
                 jump presence
@@ -99,6 +105,7 @@ label presence:
         "Keep walking.":
             jump home
         "Turn a corner then make a run for it.":
+            $ change_obedience(-50)
             n "You run and you run, yet you have a strange feeling of being followed."
             n "Until this feeling suddenly disappears and you realise you've been running for hours."
             n "You've run to an abandoned place with a big sign. \"KFC\""
@@ -112,7 +119,7 @@ label presence:
                     a "Billey! What are you doing?"
                     $ change_obedience(-2)
                     menu:
-                        n"Do you punish Billey as he is doing something he is not?"
+                        n "Do you punish Billey as he is doing something he is not?"
                         "Yes.":
                             a "Bang goes the gun as the bullet goes flying towards Billey."
                             a "Flop goes the body of Billey as the bullet flies on through."
@@ -123,6 +130,7 @@ label presence:
                             jump home
                         "No.":
                             a "Billey! Talk to me!"
+                            $change_obedience(-10)
                             jump BilleyRunning
                 "Keep walking. {w=0.2}Any delay from your route will affect your obedience score.":
                     jump home
@@ -131,6 +139,7 @@ label presence:
                     $ change_obedience(-10)
                     jump BilleyRunning
         "Run.":
+            $change_obedience(-20)
             n "You bump into a man who was trying to pry the microphone embedded in their clothes..."
             n "They were using a knife to do so..."
             n "A sharp pain spreads through your body, {w=2.0}and in your last breath, {w=2.0}you look down to see a knife {w=1.0}impaled into your chest."
@@ -157,6 +166,7 @@ label home:
         n "Do you tuck your little sister in?"
         "Yes.":
             a "*Tucks her in.*"
+            $ change_obedience(2)
             $ TuckedSisterIn = True
         "No.":
             n "Why? This small deed of good affects the story in no feasible way."
@@ -195,6 +205,7 @@ label home:
     n "He's not there."
     menu:
         "Search more for Billey?":
+            $ change_obedience(-5)
             a "Billey?"
             n "You search for Billey, finding him climbing a tree."
             a "There you are, Billey."
@@ -253,12 +264,14 @@ label lesson1:
     $ renpy.say("Teacher", "You're always being observed after all. Behave the part.")
     $ change_obedience(-16)
     if obedienceScore > 80:
+        $ change_obedience(5)
         a "Yes sir."
     else:
         menu:
             b "You gonna keep playing by their rules, [a.name] or are ya gonna stand up for yourself?"
             "Rules are rules.":
                 $ change_obedience(15)
+                jump homeAgain
             "Stand up for myself? Hell yes.":
                 $ change_obedience(-20)
                 b "Say... how interested would you be, theoretically, in..."
@@ -379,7 +392,7 @@ label misfitMeeting:
             b "Ah... oh well."
     n "After the meeting, you've all decided on hacking and taking down the school website - distract the IT team to get more time for other acts against surveillance."
     if HC:
-        n "You've been put fourth to show your skills and lead this project."
+        n "You've been put forth to show your skills and lead this project."
     b "Wait, wait wait wait!"
     b "[a.name], we need to assign you your role."
     b "We have the Geeks. {w=1.0}They find bypasses, exploits, vulnerabilities in the ruined system and do all the research and OSINT required."
@@ -402,27 +415,101 @@ label misfitMeeting:
         "Masked":
             $ role = "Masked"
     b "So... a [role] called out to you? How intriguing..."
+    $ change_obedience(-5)
     b "And here I thought you were a servant of the system. Guess you've proved my doubts to be nothing but that - doubts."
+    $ say("Important Misfit", "I'm nicknamed \'Maverick\' by the way.")
+    $ say("Maverick", "I'm the leader of the UK Misfits.")
+    jump misfitDay
+
+label misfitDay:
+    n "You've been assigned to do what ever it takes it disable the security cameras in the bathroom during your 2nd lesson."
+    n "First lesson flies by, but now you have lesson."
+    menu:
+        "Go to the bathroom.":
+            jump bathroom
+        "Go to lesson.":
+            jump camerasLesson
+
+label bathroom:
+    n "In the bathroom, you see a security camera in the corner of the room with full view of most things."
+    n "'To catch vandalism' they said..."
+    a "*Mutters* Vandalise the anti-vandalism camera? Perfect."
+    while True:
+        menu:
+            "Climb up on a toilet to reach the camera and give it a good smack.":
+                n "You hurt your hand. Ouch."
+            "Do the Macarena.":
+                n "You try, but you fail it so horribly that everyone in the bathroom stares directly at you in horror, and the security camera sparks and dies, the AI in it overloading."
+                jump misfitCamera
+            "Throw a rock.":
+                n "You see no rock."
+            "Throw a brick.":
+                n "You try and try to get a brick free, but cement is, believe it or not, quite very strong."
+            "Grab a handful of water and throw it at the camera.":
+                n "You try, but the water falls through the holes between your hands. Idiot."
+            "Wrap your shirt around it.":
+                n "You wrap your shirt around it, and walk out shirtless."
+                n "But of course you wrapped it around every part but the actual camera part. Only the casing."
+            "Use your phone to hack it.":
+                n "You start downloading a program \"Hack Security Cameras - No Scam\""
+                n "but, since you're in the school bathrooms, your signal is not very good and it takes 5 minutes to get 1%"
+                n "but in that time the teacher sent someone to find you, and they retrieve you from the bathrom."
+
+label camerasLesson:
+    n "As you enter lesson, it starts normal, you sit down and the teacher takes the register. Some bit into the lesson, you remember your goal."
+    n "Bathroom. Security cameras."
+    menu:
+        "Ask to go to the bathroom.":
+            $ say("Teacher", "No. The lesson has just started.")
+        "Do your work.":
+            $ say("Teacher", "Well done on the good work, [a.name]")
+    n "A couple minutes pass."
+    menu:
+        "Ask to go to the bathroom.":
+            $ say("Teacher", "Are you desperate?")
+            menu:
+                "Yes.":
+                    $ say("Teacher", "Okay, then. But just because you're a good kid.")
+                "No.":
+                    $ say("Teacher", "Eh, you know what? You're my favourite student. Off you go.")
+            jump bathroom
+        "Do your work.":
+            n "A kid asks to go to the bathroom, but the teacher denies them, saying \"Only kids with [obedienceScore] or more can go mid-lesson. You know this.\""
+            menu:
+                "Ask to go to the bathroom.":
+                    pass
+                "Do your work.":
+                    $ say("Teacher", "Such as [a.name]!")
+                    menu:
+                        "Ask to go to the bathroom.":
+                            pass
+            jump bathroom
+
+label misfitCamera:
+    b "Well done!"
 
 label homeAgain:
     n "The day passes."
     n "School tomorrow? Billey is gone."
     n "The day after? Still no sign of him. Nor of your sister."
+    $ change_obedience(5)
     n "3rd day of this? You feel used to it. Day after day passes until you realise you've graduated."
     n "You're on a walk with your new dog."
     n "You take your dog on another walk. And another."
+    $ change_obedience(2)
     n "5 years of taking your dog on a walk every two days."
     n "You're old now."
-    n "Old and alone because the system taught you to prioritise work over relationships. You worked day in day out."
+    $ change_obedience(1)
+    n "Old and alone. The system taught you to prioritise work over relationships. You worked day in day out."
     n "..."
     n "You're dead now."
-    n "Dead and unburried. You died peacefully yet alone. No one noticed. No one realised."
+    n "Dead and unburied. You died peacefully yet alone. No one noticed. No one realised."
     n "..."
     n "Your rent's due now."
     n "Your landlord finds your rotten corpse on the floor of your living room."
     n "..."
-    n "Your done now."
-    n "Nothing for you in land of the living nor dead."
+    n "You're done now."
+    n "Nothing for you in the land of the living nor dead."
     n "..."
     jump endScreen
 
@@ -433,7 +520,15 @@ label endScreen:
     w "Now, let's take a look at what we've captured of you..."
     if not BilleyAlive:
         w "So... you deviated to kill your friend? Well done for killing a lead figure."
-    if obedienceScore < 50:
+    if obedienceScore < 0 and misfit:
+        w "Uhh...—"
+        n "What's?—"
+        $ say("Maverick", "Now that we've got them gone...")
+        $ say("Maverick", "[a.name], you were one of our best members, and we can't have you go just like that.")
+        $ say("Maverick", "So what we're gonna do is send you through time and space to join the Misfits in the Misfit HQ, 2031.")
+        $ say("Maverick", "The future so not to cause any problems in time.")
+        jump future
+    elif obedienceScore < 50:
         w "You're a traitor of the worst kind."
         if misfit:
             w "AND you joined the Misfits."
@@ -448,7 +543,24 @@ label endScreen:
         w "For this..."
         w "Report to the incineration and replacement facility."
         n "Two armed guards march in and one holds a strange device to your throat, and you swiftly lose consciousness."
-    if not misfit and obedienceScore >= 90 and BilleyAlive:
+    if obedienceScore > 100:
+        w "Wow. Just wow. Your obedience score is higher than even mine."
+        w "Wow... I'd applaud you, but I can't take my hand off this button else you'll fall to the incinerator..."
+        w "But... you have to take my job."
+        w "The person with the highest obedience has this job..."
+        n "And with that, the worker takes the keys out of the machine, hand still on button, chucks them to you, and you two swap places."
+        n "Never once was the button released. Although you are now the one pressing it."
+        n "Then, as the worker is thanking you, your hand slips and the worker plummets."
+        $ change_obedience(1)
+        n "Day after day you work this job, thousands of people reviewed, and at least 18 a day."
+        n "This is your life now. No one was ever able to topple your record."
+        n "You've been working this job for who knows how long until, eventually, you see Billey."
+        n "Billey is in his 90s. You're still the same age as when you last saw him."
+        n "Turns out Billey was a key figure in the Misfits, but you're too overwhelmed by emotion to properly read it."
+        n "Billey does not remember you."
+        n "No one even noticed you were gone."
+        n "The system just... let you fade out..."
+    elif not misfit and obedienceScore >= 90 and BilleyAlive:
         n "Your life was meaningless. You did nothing of value."
         n "I feel sorry for you. Actual pity."
     menu:
@@ -465,3 +577,6 @@ label endScreen:
             jump start
         "Exit":
             return
+
+label future:
+    n "You've jumped so far in the future, that I've not yet completed this..."
