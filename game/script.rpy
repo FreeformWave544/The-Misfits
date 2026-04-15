@@ -112,7 +112,7 @@ label presence:
                     a "Billey! What are you doing?"
                     $ change_obedience(-2)
                     menu:
-                        n"Did you misread shout as shoot?"
+                        n"Do you punish Billey as he is doing something he is not?"
                         "Yes.":
                             a "Bang goes the gun as the bullet goes flying towards Billey."
                             a "Flop goes the body of Billey as the bullet flies on through."
@@ -405,8 +405,26 @@ label misfitMeeting:
     b "And here I thought you were a servant of the system. Guess you've proved my doubts to be nothing but that - doubts."
 
 label homeAgain:
-    pass
-    # REMEMBER THIS!!
+    n "The day passes."
+    n "School tomorrow? Billey is gone."
+    n "The day after? Still no sign of him. Nor of your sister."
+    n "3rd day of this? You feel used to it. Day after day passes until you realise you've graduated."
+    n "You're on a walk with your new dog."
+    n "You take your dog on another walk. And another."
+    n "5 years of taking your dog on a walk every two days."
+    n "You're old now."
+    n "Old and alone because the system taught you to prioritise work over relationships. You worked day in day out."
+    n "..."
+    n "You're dead now."
+    n "Dead and unburried. You died peacefully yet alone. No one noticed. No one realised."
+    n "..."
+    n "Your rent's due now."
+    n "Your landlord finds your rotten corpse on the floor of your living room."
+    n "..."
+    n "Your done now."
+    n "Nothing for you in land of the living nor dead."
+    n "..."
+    jump endScreen
 
 define w = Character("Processing Worker")
 label endScreen:
