@@ -33,6 +33,7 @@ default TuckedSisterIn = ""
 default obedienceScore = 96.0
 default misfit = False
 default HC = False
+default cat = False
 default role = ""
 screen obedience():
     frame:
@@ -67,6 +68,7 @@ label start:
     $ BilleyAlive = True
     $ BilleyRun = False
     $ TuckedSisterIn = ""
+    $ cat = False
     $ obedienceScore = 96.0
     $ a = Character(renpy.input("What is your name? ", length=20).strip() or "Alex")
     n "*BEEP BEEP*"
@@ -502,17 +504,94 @@ label misfitCamera:
     b "Anyway, we've got a new job for you. Do you chose to accept?"
     menu:
         b "We need you to kill a kitten."
-        "Yes.":
+        "Yes. I... Accept.":
             b "Monster."
-            return
-        # -=-=-=-=-=-=-=-=- UNFINISHED -=-=-=-=-=-=-=-=- UNFINISHED -=-=-=-=-=-=-=-=- UNFINISHED -=-=-=-=-=-=-=-=-
+            b "But is it necessary. We need you to kill a kitten."
+            b "The owner of such a pet fondly named it \"Safia\"."
+            b "The owner's name being \"Soya\"."
+            n "You get on a train as instructed, and after a bit of a travel, you reach a house."
+            menu:
+                "The door is locked."
+                "Kick it down.":
+                    pass
+                "Pick the lock.":
+                    pass
+            n "You make quick work of the lock."
+            n "As you enter the building, you see the kitten."
+            n "Laying on its side, ribcage showing."
+            n "It looks starved. Neglected. Lying awake, eyes wide, pupils dilated."
+            n "Yet it stares blankly past you at the wall."
+            n "It does not react as you approach."
+            n "Nor as the door slams closed, loud enough to make you jump."
+            n "It just lays there."
+            menu:
+                "Do you kill it?"
+                "Yes.":
+                    n "No. I am the narrator and I have the power."
+                    n "You're only here 'cause I let you be here."
+                    n "Now... let. That. Cat. LIVE."
+                "No.":
+                    pass
+            menu:
+                "Do you take it home with you?"
+                "Yes.":
+                    n "KITTY! CAT! SO CUTE! AWEEE!!!"
+                "No.":
+                    n "You can't bare to leave it. You take it with you."
+            $ cat = True
+            n "You head back to your house."
+            jump catHome
         "No.":
             b "Wrong choice."
             n "You feel a strange sensation growing inside you,"
             n "like you're being lifted from the ground, ascending..."
             n "then, all of a sudden, this sensation collapses in on itself, and a sheer pain - exploding inside of you."
-            n "You collapse to the ground, coughing up blood."
+            n "You collapse to the ground, coughing up blood. A bullet alongside that blood."
             jump endScreen
+
+label catHome:
+    n "At your house, you set the cat down."
+    n "The cat lays there."
+    n "You find it some food."
+    n "You feed it."
+    n "Its eyes finally lay to rest.{w=1.0} It sleeps."
+    n "And, at long last. After a long, long day. You plop down in your bed..."
+    n "And you rest. You put your troubled mind to ease..."
+    n "..."
+    n "......"
+    n "Your sleep is sound save the deep growling growing suddenly inside you."
+    n "It vibrates your whole body, and for a few seconds, your mind goes in full panic as you wake with a jolt."
+    n "And you see the root cause."
+    n "The cat - Safia - is sleeping right by your head. It was yawning awake."
+    n "Your heart shatters at the thought that a human had to consciously neglect them."
+    menu:
+        "The cat look hungry again."
+        "Give it some Tuna.":
+            pass
+        "Give it some dairy milk.":
+            n "It immediately starts lapping it up."
+        "Give it some oat milk.":
+            n "It stares a few moments too long at this strange new liquid, but braves it and drinks some."
+            n "Turns out it is slightly better than dairy milk with many environmental advantages."
+    n "Very soon, Safia has devoured all you gave it, and seems satisfied."
+    n "But very soon you realise something dire."
+    n "You realise you've not much for the cat. Food you eat, the bed you sleep, but nothing specifically for it."
+    n "No cat bed. No litter box. No cat food (kibble). No leash. Nothing."
+    n "And very soon you regret your ignorance as you see fur scattered across your bed, milk spilt everywhere and a need for the cat to stretch its legs."
+    n "But before you can care for that, you hear a knocking on the door."
+    menu:
+        b "[a.name]? You in there?"
+        "Yep! Come in!":
+            n "Billey sees the cat and stares you dead in the eyes."
+        "*Hide Safia.*":
+            b "[a.name]?"
+            n "Billey uses the keys you gave them to open the door and sees the cat."
+        "*Stay silent and still.*":
+            n "Safia lets out a loud purr, nuzzling your leg."
+            b "[a.name]... is that...?"
+            n "Billey uses the keys you gave them to open the door and sees the cat."
+            b "Yep..."
+    b "I thought I told you your mission was to kill the damned thing."    
 
 label homeAgain:
     n "The day passes."
@@ -654,6 +733,11 @@ label pinkRoom:
     m "Yes..."
     a "That Billey can name this new virus how they want?!"
     m "*Chucles slightly.* Sadly no, documenting it would blow our cover."
+    menu:
+        "But... Billey could go to a public hospital? Get it documented? Get it named?":
+            m "That would likely doom Billey to certain death. We will not allow that."
+        "I... can I see him?":
+            m "Not until we can find out how contagious this is."
 
 label violin:
     n "The violin fits perfectly in your arms, and you feel an unresistable urge to play it..."

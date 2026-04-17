@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 240: end of line expected.
-    show text "3 Days." dissolve
-                        ^
+File "game/script.rpy", line 528: choice menuitem expects a non-empty block.
+    "Do you kill it?":
+                      ^
 
 Ren'Py Version: Ren'Py 8.5.2.26010301
-Sun Apr 12 19:54:09 2026
+Fri Apr 17 23:56:35 2026
