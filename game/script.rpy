@@ -77,7 +77,7 @@ label start:
     n "It was a day like all the others."
     n "Nothing observed to differ from the norm."
     show screen obedience
-    a "*Sigh* Another 11 hour school day... {w=1.0}'optimal' knowledge retention they said..."
+    a "*Sigh* Another 11-hour school day... {w=1.0}'optimal' knowledge retention they said..."
     a "Ha{w=0.2}.{w=0.2}.{w=0.2}. optimal for collecting data we know."
     jump presence
 
@@ -406,7 +406,7 @@ label misfitMeeting:
     b "My way of fixing the system has always been blowing up the medium into a million pieces and putting it back together in a beautiful sculpture."
     b "But that's just me."
     menu:
-        b "So, what do you chose?"
+        b "So, what do you choose?"
         "Geek":
             $ role = "Geek"
         "Neek":
@@ -425,8 +425,8 @@ label misfitMeeting:
     jump misfitDay
 
 label misfitDay:
-    n "You've been assigned to do what ever it takes it disable the security cameras in the bathroom during your 2nd lesson."
-    n "First lesson flies by, but now you have lesson."
+    n "You've been assigned to do whatever it takes it disable the security cameras in the bathroom during your 2nd lesson."
+    n "First lesson flies by, but now you have lesson 2."
     menu:
         "Go to the bathroom.":
             jump bathroom
@@ -456,7 +456,7 @@ label bathroom:
             "Use your phone to hack it.":
                 n "You start downloading a program \"Hack Security Cameras - No Scam\""
                 n "but, since you're in the school bathrooms, your signal is not very good and it takes 5 minutes to get 1%"
-                n "but in that time the teacher sent someone to find you, and they retrieve you from the bathrom."
+                n "but in that time the teacher sent someone to find you, and they retrieve you from the bathroom."
 
 label camerasLesson:
     n "As you enter lesson, it starts normal, you sit down and the teacher takes the register. Some bit into the lesson, you remember your goal."
@@ -537,7 +537,7 @@ label misfitCamera:
                 "Yes.":
                     n "KITTY! CAT! SO CUTE! AWEEE!!!"
                 "No.":
-                    n "You can't bare to leave it. You take it with you."
+                    n "You can't bear to leave it. You take it with you."
             $ cat = True
             n "You head back to your house."
             jump catHome
@@ -591,7 +591,73 @@ label catHome:
             b "[a.name]... is that...?"
             n "Billey uses the keys you gave them to open the door and sees the cat."
             b "Yep..."
-    b "I thought I told you your mission was to kill the damned thing."    
+    menu:
+        b "I thought I told you your mission was to kill the damned thing. Not make it a princess."
+        "Sorry...":
+            b "If you're sorry then you'll kill the cursed thing."
+            b "Now."
+            menu:
+                "Ok...":
+                    n "You grab a pen, stabbing it deep into the cat's heart."
+                    n "It's eyes rolls to the back of its head... blood pours out of its chest, covering the pen, streaks of black from the ink."
+                    n "You pull your hand away in shock, your hand covered in a mix of black and red."
+                    n "You look up at Billey and without a second thought, you say..."
+                    a "What next?"
+                    b "Next you rid us of the sight of that body."
+                    n "And mindlessly you drag the body away. Your conscious filled with guilt, pain, shock and fear. Your subconscious focused only on the task at hand."
+                    $ cat = False
+                "No!":
+                    b "What did you just say?"
+                    a "I. Said. No."
+                    b "And I say yes."
+                    a "Out of my house. Now.{w=1.0} Or else."
+                    b "Or else what?"
+                    a "Or else..."
+                    b "Ha. Another empty threat. Weak as always."
+                    n "Those words trigger something deep within you. Something that's been stirring for a while now."
+                    n "You lash out. Barely conscious of what you're doing."
+                    n "Knife to hand. Wait, no. Keys. Keys to Billey's throat..."
+                    n "Digging deep. Drawing blood."
+                    n "He resists. He fights back. He knees you in the chest. He gets free. He runs, throat bleeding."
+                    n "You stare down at your blood soaked keys."
+                    n "You stare down at your sinless sins."
+        "Yet you always told me to ignore the system.":
+            a "Yet you always told me to ignore the system. To rebel. And yet here I am doing that and you're ANGRY."
+            a "Y'know, I think you're, more so than angry, hypocritical and narcissistic."
+            a "You hate the confines of the system, yet you've created your own to overthrow the old."
+            a "You want to replace one functioning system with another one that works."
+            a "People don't like change. You'll feel resistance from the majority who are used to obedience scores."
+            a "You're wrong in so many dimensions."
+            b "You... you think us Misfits are just another system? Fools to play the game of humanity?"
+            b "No! The Misfits are so much more than that!"
+            a "So much more than what? What makes them so special?"
+            b "Because... because we have a good cause—"
+            a "We've all had causes we thought were good. Others begged to differ."
+            a "The blunt truth is that you don't seek a better humanity."
+            a "You seek control. Followers. A sense of power."
+            b "No. I seek the truth—"
+            a "The truth is that you've been neglected so long that you've forgotten what were once your core values."
+            a "Equality."
+            b "I still—!"
+            a "Justice."
+            b "That's different—"
+            a "Kindness."
+            b "I..."
+            a "You've forgotten what it is to be kind. You've forgotten compassion, empathy. Joy and pain. Kindness and suffering."
+            a "You know only what others done to wrong you."
+            b "No!"
+            n "In a fit of rage, Billey grabs out a gun, pointing it at you."
+            b "Stop speaking. Your words are lies spat by a serpent of the devil."
+            b "You want to manipulate me. Make me leave the Misfits, but you're wrong! I will stay strong!"
+            b "I... I... I... I am in the right. Not you!"
+            n "Billey runs out the front door. Runs and runs and runs."
+    n "You know what you done is wrong."
+    if cat:
+        n "You know Billey now hates you."
+        n "You know you've wronged him."
+        n "You know he wronged you."
+    else:
+        b "Good. Now you can follow orders we can continue."
 
 label homeAgain:
     n "The day passes."
@@ -721,14 +787,14 @@ label pinkRoom:
             m "I'm the Maverick. Now, who are you?"
             a "The Maverick! I'm [a.name]! Remember me?"
             m "I... yes, I do!"
-    m "Since you left, the Misfits of the UK decended to chaos. The UK is ruined. I was forced to flee to here - the Capital of the Misfits and most surveillance-heavy country in the world."
+    m "Since you left, the Misfits of the UK descended to chaos. The UK is ruined. I was forced to flee to here - the Capital of the Misfits and most surveillance-heavy country in the world."
     a "How... wait, is Billey okay?!"
     m "He's here in this very house... but he's fallen sick."
     a "Is... is he gonna survive?"
     m "Maybe."
     m "We've never seen anything like it."
     m "Even with our advanced technology and hard-working members, we've found nothing."
-    m "Nothing what so ever. Every time we think we're getting somewhere, it seems to mutate into a whole new virus, yet we have no evidence of change."
+    m "Nothing whatsoever. Every time we think we're getting somewhere, it seems to mutate into a whole new virus, yet we have no evidence of change."
     a "Are you saying..."
     m "Yes..."
     a "That Billey can name this new virus how they want?!"
@@ -740,5 +806,5 @@ label pinkRoom:
             m "Not until we can find out how contagious this is."
 
 label violin:
-    n "The violin fits perfectly in your arms, and you feel an unresistable urge to play it..."
+    n "The violin fits perfectly in your arms, and you feel an irresistible urge to play it..."
     n "But you resist. Obedience is the way. You put back the violin, and you continue on your way."
