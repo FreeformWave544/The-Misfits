@@ -186,13 +186,13 @@ label home:
         for i in range(3):
             for p in random.sample(phrases, len(phrases)):
                 renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.3}{nw}")
-        for i in range(4):
+        for i in range(3):
             for p in random.sample(phrases, len(phrases)):
                 renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.15}{nw}")
-        for i in range(5):
+        for i in range(4):
             for p in random.sample(phrases, len(phrases)):
                 renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.05}{nw}")
-        for i in range(10):
+        for i in range(5):
             for p in random.sample(phrases, len(phrases)):
                 renpy.say(str(glitch_name()), str(glitch_text(p)) + "{w=0.001}{nw}")
         renpy.say("?..??", "3 days...{w=2.0}{nw}")
@@ -260,7 +260,7 @@ label lesson1:
             a "3 days? I—Uh—"
             hide text "3 Days." with dissolve
     a "Sure... I guess..."
-    a "Just as long as we don't repeat what happened with your sister... y'know. Third try's not the charm."
+    a "Just as long as we don't repeat what happened with my sister... y'know. Third try's not the charm."
     n "You two laugh in unison."
     n "The teacher then glares daggers at the pair of you."
     $ renpy.say("Teacher", "You two lovebirds. Not this again. One warning - and this is it.")
@@ -455,7 +455,7 @@ label bathroom:
                 n "But of course you wrapped it around every part but the actual camera part. Only the casing."
             "Use your phone to hack it.":
                 n "You start downloading a program \"Hack Security Cameras - No Scam\""
-                n "but, since you're in the school bathrooms, your signal is not very good and it takes 5 minutes to get 1%"
+                n "but, since you're in the school bathrooms, your signal is not very good and it takes 5 minutes to get 1%%"
                 n "but in that time the teacher sent someone to find you, and they retrieve you from the bathroom."
 
 label camerasLesson:
@@ -656,8 +656,38 @@ label catHome:
         n "You know Billey now hates you."
         n "You know you've wronged him."
         n "You know he wronged you."
+        n "But at least you have Safia. Safia, safe and sound. Soft and strong. Slowly and steadily adapting to the new environment."
     else:
         b "Good. Now you can follow orders we can continue."
+    jump sister
+
+label sister:
+    n "The next day at school, you see Billey. He seems... different... and happy..."
+    menu:
+        b "Say... where is your sister at? I've not seen her in a while."
+        "I... I can't say I entirely know...":
+            b "But she's your sister."
+            a "Yet an independent person from me."
+            if cat:
+                a "And it's 'bout time you understood that."
+                a "We're not all pawns in your game to be played like junk mail."
+                a "We're all human beings who live independent lives."
+        "My sister? Right, where IS she?!":
+            b "[a.name]..."
+            b "I've got to tell you the truth..."
+            a "Firstly, my sister. I need to know where she is!"
+            b "That's the thing..."
+            a "Go on...?"
+    b "She has, for years, fought against us."
+    b "You wonder why she seems to have endless friends to go out with at every time of day, but in reality, she is out searching for our hideouts."
+    b "And yet she is a better fighter than any of us. She's taken down any attempt to shut her down, yet she never kills."
+    n "You laugh audibly."
+    a "She is not a fighter. I've had to protect her at school when she was about to get 'jumped' for the first time."
+    a "So speak your lies no longer. I wish not to hear them."
+    b "It's the truth. Despite what you think, your sister is a better actor than you think."
+    b "And we need you to avoid her at all costs."
+    $ renpy.show_screen("obedience_popup", "++Find your sister at all costs.++")
+    jump endScreen
 
 label homeAgain:
     n "The day passes."
@@ -740,7 +770,7 @@ label endScreen:
                 w "For joining the misfits, you will wait here for a while to think of your actions."
                 w "Don't worry, no matter how much you click, it won't be any quicker."
                 python:
-                    renpy.say(n, "".join("{color=#%06x}...\u200b{/color}{w=0.1}" % random.randint(0, 0xFFFFFF) for _ in range(max(0, int(200.0 - obedienceScore)))))
+                    renpy.say(n, "".join("{color=#%06x}...\u200b{/color}{w=0.1}" % random.randint(0, 0xFFFFFF) for _ in range(max(0, int(180.0 - obedienceScore)))))
             if TuckedSisterIn == False:
                 w "We're looping back. {w=0.5}Why didn't you tuck your sister in?"
                 w "Is it some kind of personal vendetta (same name as one of my game - go play it on itch.io!) against your own sister?"
