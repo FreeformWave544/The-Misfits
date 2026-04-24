@@ -79,6 +79,7 @@ label start:
     show screen obedience
     a "*Sigh* Another 11-hour school day... {w=1.0}'optimal' knowledge retention they said..."
     a "Ha{w=0.2}.{w=0.2}.{w=0.2}. optimal for collecting data we know."
+    n "You start walking to school, your sister assumably running late yet again."
     jump presence
 
 default spins = 0
@@ -103,7 +104,7 @@ label presence:
             if spins >= 10:
                 n "STOP. {w=1.0}NOW!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!{w=1.0}!"
             elif spins >= 5:
-                n "You might want to slow down a bit...{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}"
+                n "And... you might want to slow down a bit...{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}{w=1.0}"
             jump presence
         "Keep walking.":
             jump home
@@ -459,8 +460,9 @@ label bathroom:
                 n "but in that time the teacher sent someone to find you, and they retrieve you from the bathroom."
 
 label camerasLesson:
-    n "As you enter lesson, it starts normal, you sit down and the teacher takes the register. Some bit into the lesson, you remember your goal."
-    n "Bathroom. Security cameras."
+    n "As you enter lesson, it starts normal, you sit down and the teacher takes the register."
+    n "Some bit into the lesson, you remember your goal."
+    n "Bathroom. Security cameras. Misfits."
     menu:
         "Ask to go to the bathroom.":
             $ say("Teacher", "No. The lesson has just started.")
@@ -524,6 +526,8 @@ label misfitCamera:
             n "It does not react as you approach."
             n "Nor as the door slams closed, loud enough to make you jump."
             n "It just lays there."
+            n "And it looks so much like your sister when she was given alcohol for the first time."
+            n "But to your credit, that was an accident."
             menu:
                 "Do you kill it?"
                 "Yes.":
@@ -567,7 +571,8 @@ label catHome:
     menu:
         "The cat look hungry again."
         "Give it some Tuna.":
-            pass
+            n "Mmmm! Fish..."
+            n "Oh yeah, the cat."
         "Give it some dairy milk.":
             n "It immediately starts lapping it up."
         "Give it some oat milk.":
@@ -724,6 +729,8 @@ label endScreen:
     if obedienceScore < 0 and misfit:
         w "Uhh...—"
         n "What's?—"
+        n "Both the worker and I disappear... I disappeared, how am I speaking? Eh, who cares."
+        n "CONTINUITY ERRORS! YEAH!!"
         m "Now that we've got them gone..."
         m "[a.name], you were one of our best members, and we can't have you go just like that."
         m "So what we're gonna do is send you through time and space to join the Misfits in the Misfit HQ, 2031."
@@ -773,7 +780,7 @@ label endScreen:
                     renpy.say(n, "".join("{color=#%06x}...\u200b{/color}{w=0.1}" % random.randint(0, 0xFFFFFF) for _ in range(max(0, int(180.0 - obedienceScore)))))
             if TuckedSisterIn == False:
                 w "We're looping back. {w=0.5}Why didn't you tuck your sister in?"
-                w "Is it some kind of personal vendetta (same name as one of my game - go play it on itch.io!) against your own sister?"
+                w "Is it some kind of Personal Vendetta (same name as one of my game - go play it on itch.io!) against your own sister?"
                 w "If so, why? She never did anything good nor bad to you! All you see of her is her sleeping in this WHOLE visual novel!"
             jump start
         "Exit":
@@ -834,6 +841,15 @@ label pinkRoom:
             m "That would likely doom Billey to certain death. We will not allow that."
         "I... can I see him?":
             m "Not until we can find out how contagious this is."
+    n "A few days pass and you learn the ins and outs of this new building, and settling into this new time."
+    n "But as the days pass, [m.name] tells you of Billey's condition getting worse and worse and all their attempts at saving him to seemingly no avail."
+    n "You're left helpless as you're told Billey passed, not having been able to see him since you got to this new time."
+    n "Yet you can't help but feel a little relief."
+    n "He was always treated as more than you. Always treated with respect. Always acknowledged."
+    n "Yet you got ignored. Disrespected. Dehumanised."
+    n "And now without him gone... you won't have people constantly and unfairly comparing you two..."
+    n "Why should you be compared to someone with completely different passions, joys, and loves than you?"
+    n "Two separate entities are not equatable."
 
 label violin:
     n "The violin fits perfectly in your arms, and you feel an irresistible urge to play it..."
